@@ -111,7 +111,7 @@ Json::Value MKVReader::GetMetadataJson() {
     value["color_mode"] = GetTagInMetadata("K4A_COLOR_MODE");
 
     value["stream_length_usec"] =
-            k4a_plugin::k4a_playback_get_last_timestamp_usec(handle_);
+            int (k4a_plugin::k4a_playback_get_last_timestamp_usec(handle_));
     auto color_mode = value["color_mode"].asString();
     size_t pos = color_mode.find('_');
     if (pos == std::string::npos) {

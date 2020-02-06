@@ -39,7 +39,7 @@ bool MKVMetadata::ConvertToJsonValue(Json::Value &value) const {
     value["color_mode"] = color_mode_;
     value["depth_mode"] = depth_mode_;
 
-    value["stream_length_usec"] = stream_length_usec_;
+    value["stream_length_usec"] = int(stream_length_usec_);
     value["width"] = width_;
     value["height"] = height_;
 
