@@ -392,8 +392,10 @@ bool Visualizer::RemoveGeometry(
     glfwMakeContextCurrent(window_);
     std::shared_ptr<glsl::GeometryRenderer> geometry_renderer_delete = NULL;
     for (auto &geometry_renderer_ptr : geometry_renderer_ptrs_) {
-        if (geometry_renderer_ptr->GetGeometry() == geometry_ptr)
+        if (geometry_renderer_ptr->GetGeometry() == geometry_ptr) {
             geometry_renderer_delete = geometry_renderer_ptr;
+            break;
+        }
     }
     if (geometry_renderer_delete == NULL) return false;
     geometry_renderer_ptrs_.erase(geometry_renderer_delete);
