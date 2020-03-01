@@ -49,7 +49,6 @@ class KinectFusionConfig(object):
         # self.params = params = cv2.kinfu.Params_coarseParams()
         self.params = cv2.kinfu.Params_defaultParams()
         self.params.frameSize = (self.camera_intrinsic.width, self.camera_intrinsic.height)
-        self.params.frameSize = (1280, 720)
         self.kinfu = cv2.kinfu.KinFu_create(self.params)
 
 if __name__ == "__main__":
@@ -69,14 +68,9 @@ if __name__ == "__main__":
     
     #TODO: Retrieve Calibrarion: https://github.com/microsoft/Azure-Kinect-Samples/blob/edb6c364eb7fb86638327c7a1b3da1833b85d9a0/opencv-kinfu-samples/main.cpp#L432
     #TODO: Start Cameras
-    #TODO: Initialize Kinfu parameters
-    #TODO: Initialize Distortion coefficients
-    #TODO: Create KinectFusion Module Instance
-    #TODO: LoopOver
     frame = frame_gen.get_next_frame()
     vis = o3d.visualization.VisualizerWithKeyCallback()
     # vis.register_key_callback(glfw_key_escape, self.escape_callback)
-    vis.create_window('viewer', 1920, 540)
     while True:
         rgbd = next(frame)
         vis_geometry_added = False
@@ -92,9 +86,6 @@ if __name__ == "__main__":
         vis.poll_events()
         vis.update_renderer()
 
-
-        #TODO: Read depth frame and depth image
-        #TODO: Update KinectFusion
         #TODO: Retrieve rendered TSDF
         #TODO: Retrieve fused point cloud and normals
         #TODO: Show TSDF rendering
