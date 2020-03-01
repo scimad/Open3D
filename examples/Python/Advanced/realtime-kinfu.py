@@ -46,9 +46,11 @@ class FrameGen(object):
 class KinectFusionConfig(object):
     def __init__(self):
         self.camera_intrinsic = o3d.io.read_pinhole_camera_intrinsic('/home/scimad/EK/Work/VR360/Open3D/examples/Python/Advanced/scratch/intrinsic_config.json')
-        # self.KinFu = cv2.kinfu.KinFu_create(self.camera_intrinsic)
-        #TODO: Change this params to your Azure Kinect's Params! (Refer to https://github.com/opencv/opencv_contrib/issues/1903)
-        self.kinfu = cv2.kinfu.KinFu_create(cv2.kinfu.Params_defaultParams())
+        # self.params = params = cv2.kinfu.Params_coarseParams()
+        self.params = cv2.kinfu.Params_defaultParams()
+        self.params.frameSize = (self.camera_intrinsic.width, self.camera_intrinsic.height)
+        self.params.frameSize = (1280, 720)
+        self.kinfu = cv2.kinfu.KinFu_create(self.params)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Kinect Fusion')
