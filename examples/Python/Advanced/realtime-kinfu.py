@@ -1,3 +1,5 @@
+import cv2
+import numpy as np
 import argparse
 import open3d as o3d
 
@@ -44,6 +46,9 @@ class FrameGen(object):
 class KinectFusionConfig(object):
     def __init__(self):
         self.camera_intrinsic = o3d.io.read_pinhole_camera_intrinsic('/home/scimad/EK/Work/VR360/Open3D/examples/Python/Advanced/scratch/intrinsic_config.json')
+        # self.KinFu = cv2.kinfu.KinFu_create(self.camera_intrinsic)
+        #TODO: Change this params to your Azure Kinect's Params! (Refer to https://github.com/opencv/opencv_contrib/issues/1903)
+        self.kinfu = cv2.kinfu.KinFu_create(cv2.kinfu.Params_defaultParams())
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Kinect Fusion')
@@ -58,6 +63,7 @@ if __name__ == "__main__":
     frame_gen = FrameGen(config, args.source)
 
     my_kinfu_config = KinectFusionConfig()
+    print (my_kinfu_config.kinfu)
     
     #TODO: Retrieve Calibrarion: https://github.com/microsoft/Azure-Kinect-Samples/blob/edb6c364eb7fb86638327c7a1b3da1833b85d9a0/opencv-kinfu-samples/main.cpp#L432
     #TODO: Start Cameras
@@ -74,6 +80,7 @@ if __name__ == "__main__":
         vis_geometry_added = False
         if rgbd is None:
             continue
+        # my_kinfu_config.kinfu.update(np.asarray(rgbd.depth))
 
         if not vis_geometry_added:
             vis.add_geometry(rgbd)
