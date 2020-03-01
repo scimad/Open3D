@@ -72,6 +72,7 @@ if __name__ == "__main__":
     vis = o3d.visualization.VisualizerWithKeyCallback()
     # vis.register_key_callback(glfw_key_escape, self.escape_callback)
     vis.create_window('viewer', 1920, 540)
+    old_rgbd = None
     while True:
         rgbd = next(frame)
         vis_geometry_added = False
@@ -81,6 +82,9 @@ if __name__ == "__main__":
 
         if not vis_geometry_added:
             vis.add_geometry(rgbd)
+            if old_rgbd is not None:
+                vis.remove_geometry(old_rgbd)
+            old_rgbd = rgbd
             vis_geometry_added = True
 
         vis.update_geometry(rgbd)
