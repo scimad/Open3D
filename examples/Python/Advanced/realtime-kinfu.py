@@ -71,6 +71,7 @@ if __name__ == "__main__":
     frame = frame_gen.get_next_frame()
     vis = o3d.visualization.VisualizerWithKeyCallback()
     # vis.register_key_callback(glfw_key_escape, self.escape_callback)
+    vis.create_window('viewer', 1920, 540)
     while True:
         rgbd = next(frame)
         vis_geometry_added = False
