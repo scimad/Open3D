@@ -72,22 +72,31 @@ if __name__ == "__main__":
     vis = o3d.visualization.VisualizerWithKeyCallback()
     # vis.register_key_callback(glfw_key_escape, self.escape_callback)
     vis.create_window('viewer', 1920, 540)
-    old_rgbd = None
+    old_pcd = None
     while True:
         rgbd = next(frame)
         vis_geometry_added = False
         if rgbd is None:
             continue
-        # my_kinfu_config.kinfu.update(np.asarray(rgbd.depth))
+        my_kinfu_config.kinfu.update(np.asarray(rgbd.depth))
 
         if not vis_geometry_added:
-            vis.add_geometry(rgbd)
-            if old_rgbd is not None:
-                vis.remove_geometry(old_rgbd)
-            old_rgbd = rgbd
+            # vis.add_geometry(rgbd)
+            if old_pcd is not None:
+                vis.remove_geometry(old_pcd)
+            
+            xyz, normals = my_kinfu_config.kinfu.getCloud()
+            xyz = xyz[:,:,:3]
+            xyz = xyz.reshape(xyz.shape[0], xyz.shape[2])
+            pcd = o3d.geometry.PointCloud()
+            pcd.points = o3d.utility.Vector3dVector(xyz)
+            old_pcd = pcd
             vis_geometry_added = True
-
-        vis.update_geometry(rgbd)
+        
+        # o3d.visualization.draw_geometries([pcd])
+        
+        vis.add_geometry (pcd)
+        vis.update_geometry(pcd)
         vis.poll_events()
         vis.update_renderer()
 
